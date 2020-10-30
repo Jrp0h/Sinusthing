@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    * {
+      color: white;
+      background-color: black;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .input-group {
+      display: flex;
+      margin-bottom: 1rem;
+    }
+
+    .input-group h3,
+    .input-group h4 {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .input-group div {
+      margin-left: 1rem;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <canvas width="800" height="800"></canvas>
+
+  <div class="input-group">
+    <h3>Wave 1:</h3>
+    <div>
+      <label for="amp1">Amplitude</label>
+      <input type="text" placeholder="Amplitude" id="amp1" value="1">
+    </div>
+    <div>
+      <label for="hz1">Frequency</label>
+      <input type="text" placeholder="Frequency" id="hz1" value="1">
+    </div>
+    <div>
+      <label for="offset1">Frequency over time multiplier</label>
+      <input type="text" placeholder="Offset" id="offset1" value="0">
+    </div>
+  </div>
+  <div class="input-group">
+    <h3>Wave 2:</h3>
+    <div>
+      <label for="amp2">Amplitude</label>
+      <input type="text" placeholder="Amplitude" id="amp2" value="1">
+    </div>
+    <div>
+      <label for="hz2">Frequency</label>
+      <input type="text" placeholder="Frequency" id="hz2" value="1">
+    </div>
+    <div>
+      <label for="offset2">Frequency over time multiplier</label>
+      <input type="text" placeholder="Offset" id="offset2" value="0">
+    </div>
+  </div>
+  <div class="input-group">
+    <h3>Wave 3:</h3>
+    <div>
+      <label for="amp3">Amplitude</label>
+      <input type="text" placeholder="Amplitude" id="amp3" value="1">
+    </div>
+    <div>
+      <label for="hz3">Frequency</label>
+      <input type="text" placeholder="Frequency" id="hz3" value="1">
+    </div>
+    <div>
+      <label for="offset3">Frequency over time multiplier</label>
+      <input type="text" placeholder="Offset" id="offset3" value="0">
+    </div>
+  </div>
+
+  <div class="input-group">
+    <h3>Settings:</h3>
+    <div class="input-group">
+      <h4>Type:</h4>
+      <div>
+        <input type="radio" id="add" name="type" value="add" checked>
+        <label for="add">Add</label><br>
+        <input type="radio" id="mult" name="type" value="mult">
+        <label for="mult">Multiply</label><br>
+      </div>
+    </div>
+    <div class="input-group">
+      <h4>Misc:</h4>
+      <div>
+        <input type="checkbox" id="holo" name="holo" value="holo">
+        <label for="holo">Holographic</label><br>
+      </div>
+    </div>
+  </div>
+
+  <script async src="./dist/main.js"></script>
+</body>
+
+</html>
