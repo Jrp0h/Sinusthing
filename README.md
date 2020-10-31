@@ -11,3 +11,7 @@ tsc
 ```
 
 Then start an http server
+
+-----------
+
+Licensed under MIT
