@@ -38,7 +38,7 @@ function clapSin(value: number, max: number): number {
 }
 
 // For drawing lines
-let currentPosition = {x: 0, y: 400};
+let currentPosition = {x: 400, y: 400};
 
 // Draw
 function draw(position: {x: number, y: number}) {
@@ -84,9 +84,9 @@ setInterval(() => {
   for (let i = 0; i <= 360 * 2; i++) {
 
     // get y by intervalStep * i and offset by time
-    let pos1 = sinus(t + i * intervalStep, amp1Value, hz1Value + (t * offset1Value));
-    let pos2 = sinus(t + i * intervalStep, amp2Value, hz2Value + (t * offset2Value));
-    let pos3 = sinus(t + i * intervalStep, amp3Value, hz3Value + (t * offset3Value));
+    let pos1 = sinus((t * (offset1Value)) + i * intervalStep, amp1Value, hz1Value);
+    let pos2 = sinus((t * (offset2Value)) + i * intervalStep, amp2Value, hz2Value);
+    let pos3 = sinus((t * (offset3Value)) + i * intervalStep, amp3Value, hz3Value);
 
     let pos: {x: number, y: number} = {x: 0, y: 0};
 
