@@ -1,5 +1,13 @@
-let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
+let canvas: HTMLCanvasElement | null = document.querySelector("#canvas");
 let context = canvas!.getContext("2d");
+
+let ftCanvas: HTMLCanvasElement | null = document.querySelector("#ftcanvas");
+let ftContext = ftCanvas!.getContext("2d");
+
+document.querySelector("#clearfourier")!.addEventListener("click", () => {
+  ftContext!.clearRect(0, 0, 800, 800);
+});
+ftContext!.strokeStyle = "rgba(255, 255, 255, 0)";
 
 // go one step of a circle
 let intervalStep = (1 / 360);
@@ -20,6 +28,8 @@ const offset3: HTMLInputElement | null = document.querySelector("#offset3");
 const add: HTMLInputElement | null = document.querySelector("#add");
 const holographic: HTMLInputElement | null = document.querySelector("#holo");
 
+const ftInterval: HTMLInputElement | null = document.querySelector("#ftinterval");
+
 
 function sinus(x: number, amp: number, hz: number): number {
   // Do maths stuff that i stole from stack overflow
@@ -35,6 +45,19 @@ function clapSin(value: number, max: number): number {
   // then multiply by 600 so it's 0 to 600
   // then add 100 so it's 100 to 700
   return (((value / max) + 1) / 2 * 600) + 100;
+}
+
+function clapSinFourier(value: number): number {
+  // Clamp value between 0 - 350
+  // from 100 - 700
+  // by subraction 100
+  // to 0 - 600
+  // then dividing by 600
+  // to 0 - 1
+  // then multiplying with max
+  // to 0 - max
+  // return ((value - 100) / 600) * max;
+  return ((value - 100) / 600) * 350;
 }
 
 // For drawing lines
@@ -60,6 +83,7 @@ function draw(position: {x: number, y: number}) {
 
 }
 
+let oldFourierPos: {x: number, y: number} = {x: 0, y: 0};
 
 // Time
 let t = 0;
@@ -79,6 +103,8 @@ setInterval(() => {
   let offset1Value = parseFloat(offset1!.value);
   let offset2Value = parseFloat(offset2!.value);
   let offset3Value = parseFloat(offset3!.value);
+
+  let fourierPos: number = 0;
 
   // Go over 2 intervals at all times
   for (let i = 0; i <= 360 * 2; i++) {
@@ -109,13 +135,36 @@ setInterval(() => {
         y: clapSin(pos1 * pos2 * pos3, amp1Value * amp2Value * amp3Value)
       }
     }
+    if (i == 0) {
+      fourierPos = pos.y;
+    }
 
     draw(pos);
   }
+
+  // Fourier
+  let interval = parseFloat(ftInterval!.value);
+  let deg = ((t % interval) / interval) * 360;
+  let rad = (deg * Math.PI) / 180;
+
+  // console.log(fourierPos.max);
+  let size = clapSinFourier(fourierPos);
+
+  let y = (Math.sin(rad) * size) + 400;
+  let x = (Math.cos(rad) * size) + 400;
 
   // Disable color after all has been drawn
   // to prevent the first one from being drawn
   context!.strokeStyle = "rgba(255, 255, 255, 0)";
   currentPosition = {x: 400, y: 400};
 
+  ftContext!.beginPath();
+  ftContext!.moveTo(oldFourierPos.x, oldFourierPos.y);
+  ftContext!.lineTo(x, y);
+  ftContext?.stroke();
+
+  oldFourierPos.x = x;
+  oldFourierPos.y = y;
+  ftContext!.strokeStyle = "rgba(255, 255, 255, 1)";
+  // console.log(size);
 }, 1);
